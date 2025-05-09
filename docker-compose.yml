@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: rails server -b 0.0.0.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - ".:/myapp"
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: tech-books-circle-db.ckt8cykoag62.us-east-1.rds.amazonaws.com
+      DATABASE_PORT: "5432"
+      DATABASE_USERNAME: postgres
