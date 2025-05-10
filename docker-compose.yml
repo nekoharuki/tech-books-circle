@@ -1,14 +1,28 @@
-version: '3'
+version: "3.8"
+
 services:
   web:
-    build: .
-    command: rails server -b 0.0.0.0
-    ports:
-      - "3000:3000"
+    build:
+      context: .
+    container_name: web
+    command: bundle exec rails server -b 0.0.0.0
+    expose:
+      - "3000"
     volumes:
-      - ".:/myapp"
+      - ./public:/app/public
     environment:
-      RAILS_ENV: development
       DATABASE_HOST: tech-books-circle-db.ckt8cykoag62.us-east-1.rds.amazonaws.com
       DATABASE_PORT: "5432"
       DATABASE_USERNAME: postgres
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf

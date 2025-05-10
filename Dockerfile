@@ -19,7 +19,6 @@ RUN bundle install && \
 
 COPY . .
 
-# entrypoint.shの追加
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
